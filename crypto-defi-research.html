@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crypto & DeFi Research</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0a0a0f;
+      --bg-card: #12121a;
+      --bg-card-hover: #1a1a26;
+      --border: #1e1e2e;
+      --border-hover: #2e2e44;
+      --text: #e2e2ea;
+      --text-muted: #8888a0;
+      --text-dim: #55556a;
+      --accent: #7c5cff;
+      --accent-glow: rgba(124, 92, 255, 0.15);
+      --accent2: #00d4aa;
+      --accent2-glow: rgba(0, 212, 170, 0.12);
+      --accent3: #ff6b6b;
+      --accent4: #ffd93d;
+      --accent5: #4ecdc4;
+      --accent6: #a78bfa;
+      --accent7: #f472b6;
+      --accent8: #38bdf8;
+      --accent9: #fb923c;
+      --accent10: #34d399;
+      --accent11: #e879f9;
+      --accent12: #facc15;
+      --accent13: #22d3ee;
+      --radius: 12px;
+      --radius-sm: 8px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Subtle grid background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(circle at 25% 25%, rgba(124, 92, 255, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, rgba(0, 212, 170, 0.03) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ── Header ── */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10, 10, 15, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+    }
+
+    .header-links {
+      display: flex;
+      gap: 6px;
+    }
+
+    .header-links a {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+
+    .header-links a:hover {
+      color: var(--text);
+      background: rgba(255,255,255,0.05);
+    }
+
+    /* ── Hero ── */
+    .hero {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 80px 24px 60px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      background: linear-gradient(135deg, #fff 0%, #c4b5fd 50%, var(--accent2) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 16px;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto 40px;
+    }
+
+    .stats-bar {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-num {
+      font-size: 1.8rem;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .stat-label {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-top: 2px;
+    }
+
+    /* ── Navigation pills ── */
+    .nav-section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+
+    .nav-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+    }
+
+    .nav-pill {
+      font-size: 0.8rem;
+      font-weight: 500;
+      padding: 8px 16px;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.25s;
+      white-space: nowrap;
+    }
+
+    .nav-pill:hover {
+      border-color: var(--border-hover);
+      color: var(--text);
+      background: var(--bg-card-hover);
+      transform: translateY(-1px);
+    }
+
+    /* ── Main content ── */
+    .main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px 100px;
+      display: flex;
+      flex-direction: column;
+      gap: 64px;
+    }
+
+    /* ── Section ── */
+    .section { }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 8px;
+    }
+
+    .section-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.15rem;
+      flex-shrink: 0;
+    }
+
+    .section-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .section-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      padding-left: 54px;
+    }
+
+    /* ── Cards grid ── */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 12px;
+    }
+
+    .card {
+      display: block;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+
+    .card:hover {
+      border-color: var(--border-hover);
+      background: var(--bg-card-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    .card-title {
+      font-size: 0.92rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+      line-height: 1.4;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .card-title .arrow {
+      color: var(--text-dim);
+      font-size: 0.8rem;
+      margin-top: 2px;
+      transition: transform 0.2s, color 0.2s;
+      flex-shrink: 0;
+    }
+
+    .card:hover .card-title .arrow {
+      transform: translate(2px, -2px);
+      color: var(--text-muted);
+    }
+
+    .card-desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .card-author {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text-dim);
+      margin-top: 8px;
+      padding: 3px 8px;
+      background: rgba(255,255,255,0.03);
+      border-radius: 4px;
+    }
+
+    /* Section color theming */
+    .section[data-color="purple"] .section-icon { background: rgba(124, 92, 255, 0.12); color: #a78bfa; }
+    .section[data-color="purple"] .card::before { background: linear-gradient(90deg, var(--accent), transparent); }
+
+    .section[data-color="teal"] .section-icon { background: rgba(0, 212, 170, 0.12); color: #00d4aa; }
+    .section[data-color="teal"] .card::before { background: linear-gradient(90deg, var(--accent2), transparent); }
+
+    .section[data-color="red"] .section-icon { background: rgba(255, 107, 107, 0.12); color: #ff6b6b; }
+    .section[data-color="red"] .card::before { background: linear-gradient(90deg, var(--accent3), transparent); }
+
+    .section[data-color="yellow"] .section-icon { background: rgba(255, 217, 61, 0.12); color: #ffd93d; }
+    .section[data-color="yellow"] .card::before { background: linear-gradient(90deg, var(--accent4), transparent); }
+
+    .section[data-color="cyan"] .section-icon { background: rgba(78, 205, 196, 0.12); color: #4ecdc4; }
+    .section[data-color="cyan"] .card::before { background: linear-gradient(90deg, var(--accent5), transparent); }
+
+    .section[data-color="lavender"] .section-icon { background: rgba(167, 139, 250, 0.12); color: #a78bfa; }
+    .section[data-color="lavender"] .card::before { background: linear-gradient(90deg, var(--accent6), transparent); }
+
+    .section[data-color="pink"] .section-icon { background: rgba(244, 114, 182, 0.12); color: #f472b6; }
+    .section[data-color="pink"] .card::before { background: linear-gradient(90deg, var(--accent7), transparent); }
+
+    .section[data-color="blue"] .section-icon { background: rgba(56, 189, 248, 0.12); color: #38bdf8; }
+    .section[data-color="blue"] .card::before { background: linear-gradient(90deg, var(--accent8), transparent); }
+
+    .section[data-color="orange"] .section-icon { background: rgba(251, 146, 60, 0.12); color: #fb923c; }
+    .section[data-color="orange"] .card::before { background: linear-gradient(90deg, var(--accent9), transparent); }
+
+    .section[data-color="green"] .section-icon { background: rgba(52, 211, 153, 0.12); color: #34d399; }
+    .section[data-color="green"] .card::before { background: linear-gradient(90deg, var(--accent10), transparent); }
+
+    .section[data-color="fuchsia"] .section-icon { background: rgba(232, 121, 249, 0.12); color: #e879f9; }
+    .section[data-color="fuchsia"] .card::before { background: linear-gradient(90deg, var(--accent11), transparent); }
+
+    .section[data-color="gold"] .section-icon { background: rgba(250, 204, 21, 0.12); color: #facc15; }
+    .section[data-color="gold"] .card::before { background: linear-gradient(90deg, var(--accent12), transparent); }
+
+    .section[data-color="sky"] .section-icon { background: rgba(34, 211, 238, 0.12); color: #22d3ee; }
+    .section[data-color="sky"] .card::before { background: linear-gradient(90deg, var(--accent13), transparent); }
+
+    /* ── Footer ── */
+    .footer {
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 40px 24px;
+      color: var(--text-dim);
+      font-size: 0.82rem;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      .hero { padding: 48px 20px 40px; }
+      .stats-bar { gap: 24px; }
+      .cards { grid-template-columns: 1fr; }
+      .section-desc { padding-left: 0; }
+      .header-links { display: none; }
+      .nav-pills { justify-content: flex-start; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo">
+        <div class="logo-icon">&#9670;</div>
+        Crypto & DeFi Research
+      </div>
+      <nav class="header-links">
+        <a href="#defi-deep-dives">DeFi</a>
+        <a href="#lending">Lending</a>
+        <a href="#stablecoins">Stablecoins</a>
+        <a href="#rwa">RWA</a>
+        <a href="#trading">Trading</a>
+        <a href="#protocols">Protocols</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <h1>Crypto & DeFi<br/>Research Hub</h1>
+    <p>A curated collection of deep dives, analysis, and resources across DeFi, lending, stablecoins, RWAs, trading, and more.</p>
+    <div class="stats-bar">
+      <div class="stat">
+        <div class="stat-num">100+</div>
+        <div class="stat-label">Resources</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">13</div>
+        <div class="stat-label">Categories</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">2026</div>
+        <div class="stat-label">Updated</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Nav pills -->
+  <nav class="nav-section">
+    <div class="nav-pills">
+      <a class="nav-pill" href="#defi-deep-dives">DeFi Deep Dives</a>
+      <a class="nav-pill" href="#lending">Lending & Credit</a>
+      <a class="nav-pill" href="#stablecoins">Stablecoins & Yield</a>
+      <a class="nav-pill" href="#rwa">RWA & Tokenization</a>
+      <a class="nav-pill" href="#trading">Trading & Quant</a>
+      <a class="nav-pill" href="#protocols">Protocol Economics</a>
+      <a class="nav-pill" href="#investment">Investment & Career</a>
+      <a class="nav-pill" href="#defi-protocols-research">DeFi Protocols</a>
+      <a class="nav-pill" href="#analytics">Analytics Tools</a>
+      <a class="nav-pill" href="#tokenomics">Tokenomics</a>
+      <a class="nav-pill" href="#defi-apps">DeFi Apps</a>
+      <a class="nav-pill" href="#security">Security & OpSec</a>
+      <a class="nav-pill" href="#other">Other</a>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main">
+
+    <!-- DeFi Deep Dives -->
+    <section class="section" id="defi-deep-dives" data-color="purple">
+      <div class="section-header">
+        <div class="section-icon">&#9830;</div>
+        <h2 class="section-title">DeFi Deep Dives & Analysis</h2>
+      </div>
+      <p class="section-desc">Comprehensive research pieces on DeFi protocols, mechanics, and strategy.</p>
+      <div class="cards">
+        <a class="card" href="https://twitter.com/IOSGVC/status/2031579027014824423" target="_blank" rel="noopener">
+          <div class="card-title">On-Chain Yield Landscape <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Full yield landscape overview</div>
+          <div class="card-author">@IOSGVC</div>
+        </a>
+        <a class="card" href="https://twitter.com/smartestxyz/status/2030612935735701607" target="_blank" rel="noopener">
+          <div class="card-title">DeFi Evolution Over 9 Years <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">From Uniswap, Curve, Balancer to Hyperliquid</div>
+          <div class="card-author">@smartestxyz</div>
+        </a>
+        <a class="card" href="https://twitter.com/andrewhong5297/status/1982833772787185815" target="_blank" rel="noopener">
+          <div class="card-title">Unwrapping DeFi: Tokens, Pools, and Vaults <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Evolution of DeFi primitives</div>
+          <div class="card-author">@ilemi</div>
+        </a>
+        <a class="card" href="https://twitter.com/PaulFrambot/status/2011865093655683427" target="_blank" rel="noopener">
+          <div class="card-title">Morpho 2026 <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Morpho's 2026 roadmap and vision</div>
+          <div class="card-author">@PaulFrambot</div>
+        </a>
+        <a class="card" href="https://twitter.com/OAK_Res/status/2029497335894470904" target="_blank" rel="noopener">
+          <div class="card-title">Fluid V2 Launch <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Uniswap's top competitor with $200B+ volume</div>
+          <div class="card-author">@OAK_Res</div>
+        </a>
+        <a class="card" href="https://twitter.com/Decentralisedco/status/2029569587029934133" target="_blank" rel="noopener">
+          <div class="card-title">Coming of Age <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">DeFi maturation analysis</div>
+          <div class="card-author">@DCo</div>
+        </a>
+        <a class="card" href="https://twitter.com/brandonkumar/status/2022307085665374701" target="_blank" rel="noopener">
+          <div class="card-title">The Machinery of Modern Finance <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Why the next 10 years of financial innovation will surpass the prior 50</div>
+          <div class="card-author">@brandonkumar</div>
+        </a>
+        <a class="card" href="https://twitter.com/jchaskin22/status/2005277490714149033" target="_blank" rel="noopener">
+          <div class="card-title">History of DeFi Podcast <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">@tarunchitra on the history of DeFi, vaults, and comparison to CeFi</div>
+          <div class="card-author">@jchaskin22</div>
+        </a>
+        <a class="card" href="https://twitter.com/andrewhong5297/status/2029321541083697492" target="_blank" rel="noopener">
+          <div class="card-title">Steakhouse Box Vault Wrapping <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Vault-wrapping-vault dynamics in Morpho ecosystem</div>
+          <div class="card-author">@ilemi</div>
+        </a>
+        <a class="card" href="https://twitter.com/sssionggg/status/2007275334551646302" target="_blank" rel="noopener">
+          <div class="card-title">JUP Buyback Debate <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Should JUP stop $70M/yr buyback and redirect to growth?</div>
+          <div class="card-author">@sssionggg</div>
+        </a>
+      </div>
+    </section>
+
+    <!-- Lending & Credit -->
+    <section class="section" id="lending" data-color="teal">
+      <div class="section-header">
+        <div class="section-icon">&#9733;</div>
+        <h2 class="section-title">Lending & Credit</h2>
+      </div>
+      <p class="section-desc">Research on DeFi lending protocols, credit infrastructure, and yield strategies.</p>
+      <div class="cards">
+        <a class="card" href="https://twitter.com/nad_roid/status/2031342519825342926" target="_blank" rel="noopener">
+          <div class="card-title">How to Lend $250M Without Collateral <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Uncollateralized lending deep dive</div>
+          <div class="card-author">@nad_roid</div>
+        </a>
+        <a class="card" href="https://twitter.com/StaniKulechov/status/2030611384581423574" target="_blank" rel="noopener">
+          <div class="card-title">Private Credit Landscape <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">State of private credit and the cost of money</div>
+          <div class="card-author">@Stani</div>
+        </a>
+        <a class="card" href="https://twitter.com/SilvioBusonero/status/2023805308078891084" target="_blank" rel="noopener">
+          <div class="card-title">RWA Lending: Road to $10 Billion <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">RWA lending trajectory</div>
+          <div class="card-author">@SilvioBusonero</div>
+        </a>
+        <a class="card" href="https://twitter.com/SilvioBusonero/status/2009281012166021277" target="_blank" rel="noopener">
+          <div class="card-title">The Third Way in DeFi Lending <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Alternative DeFi lending model</div>
+          <div class="card-author">@SilvioBusonero</div>
+        </a>
+        <a class="card" href="https://twitter.com/cozyfinance/status/2029263063875240241" target="_blank" rel="noopener">
+          <div class="card-title">Cozy Earn: DeFi Lending with Recourse <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">First-loss capital backs every vault</div>
+          <div class="card-author">@cozyfinance</div>
+        </a>
+        <a class="card" href="https://twitter.com/DeFi_Andree/status/2007690886835245056" target="_blank" rel="noopener">
+          <div class="card-title">Lending Protocol Revenue Comparison <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Revenue efficiency across major DeFi lending protocols</div>
+          <div class="card-author">@DeFi_Andree</div>
+        </a>
+        <a class="card" href="https://twitter.com/marygooneratne/status/2018776590591627290" target="_blank" rel="noopener">
+          <div class="card-title">Onchain Credit: The Third Path <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Bilateral fixed-rate loans as foundation for institutional credit</div>
+          <div class="card-author">@marygooneratne</div>
+        </a>
+        <a class="card" href="https://twitter.com/crypto_yuvi/status/2000754172388630605" target="_blank" rel="noopener">
+          <div class="card-title">Shaping the Curator Model <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Curator model evolution in DeFi lending</div>
+          <div class="card-author">@crypto_yuvi</div>
+        </a>
+        <a class="card" href="https://twitter.com/RWA_xyz/status/2026680537163674038" target="_blank" rel="noopener">
+          <div class="card-title">Allocation Vaults for Institutional Managers <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Primer on allocation vaults for institutional asset managers</div>
+          <div class="card-author">@RWA.xyz</div>
+        </a>
+      </div>
+    </section>
+
+    <!-- Stablecoins & Yield -->
+    <section class="section" id="stablecoins" data-color="yellow">
+      <div class="section-header">
+        <div class="section-icon">&#9678;</div>
+        <h2 class="section-title">Stablecoins & Yield</h2>
+      </div>
+      <p class="section-desc">Stablecoin mechanics, yield-bearing stablecoins, and delta-neutral strategies.</p>
+      <div class="cards">
+        <a class="card" href="https://twitter.com/borjaneira_/status/2011874920808976671" target="_blank" rel="noopener">
+          <div class="card-title">Stablecoins vs Banks <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">"The bank account is a bundle. Stablecoins are trying to sell you one piece."</div>
+          <div class="card-author">@neira</div>
+        </a>
+        <a class="card" href="https://twitter.com/DeFi_Andree/status/2015708475305885712" target="_blank" rel="noopener">
+          <div class="card-title">Yield-Bearing Stablecoins Evolution <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">From USD-pegged token to on-chain fixed-income infrastructure</div>
+          <div class="card-author">@DeFi_Andree</div>
+        </a>
+        <a class="card" href="https://twitter.com/artemis/status/2014742533121966474" target="_blank" rel="noopener">
+          <div class="card-title">Stablecoin Payments: The Real Number <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Most accurate onchain estimate, built with McKinsey payment maps</div>
+          <div class="card-author">@artemis</div>
+        </a>
+        <a class="card" href="https://twitter.com/EffortCapital/status/2009690226860454275" target="_blank" rel="noopener">
+          <div class="card-title">Ethena Risk Deep Dive <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">From the risk committee: Ethena is no longer just a delta-neutral strategy</div>
+          <div class="card-author">@EffortCapital</div>
+        </a>
+        <a class="card" href="https://twitter.com/moic_digital/status/1999096603433439290" target="_blank" rel="noopener">
+          <div class="card-title">Neutrl: Engineered FOMO <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">How Neutrl grew $100M+</div>
+          <div class="card-author">@moic_digital</div>
+        </a>
+        <a class="card" href="https://twitter.com/behrin/status/2005909139386663037" target="_blank" rel="noopener">
+          <div class="card-title">Neutrl OTC Performance <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">+$7M in unrealized short P&L</div>
+          <div class="card-author">@behrin</div>
+        </a>
+        <a class="card" href="https://twitter.com/0xMether/status/2016201886395990198" target="_blank" rel="noopener">
+          <div class="card-title">Forecasting Market Regimes with sUSDe <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Using sUSDe term structure for market regime prediction</div>
+          <div class="card-author">@0xMether</div>
+        </a>
+        <a class="card" href="https://twitter.com/minnus/status/2031147325779824852" target="_blank" rel="noopener">
+          <div class="card-title">Onchain Reinsurance <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">DeFi's uncorrelated yield frontier</div>
+          <div class="card-author">@minnus</div>
+        </a>
+        <a class="card" href="https://twitter.com/lordjorx/status/2021510016302497803" target="_blank" rel="noopener">
+          <div class="card-title">Yield Tranching Meta <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Strata doubled cap to $100M; yield tranching competition heating up</div>
+          <div class="card-author">@lordjorx</div>
+        </a>
+        <a class="card" href="https://twitter.com/MiradorNews/status/2029875837235851273" target="_blank" rel="noopener">
+          <div class="card-title">AAVE V4: Dynamic Liquidation <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">The shift from static to dynamic liquidation</div>
+          <div class="card-author">@MiradorNews</div>
+        </a>
+        <a class="card" href="https://twitter.com/pendle_fi/status/2029784063326966234" target="_blank" rel="noopener">
+          <div class="card-title">Pendle 2026 Roadmap <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Making Pendle the no-brainer yield destination</div>
+          <div class="card-author">@pendle_fi</div>
+        </a>
+        <a class="card" href="https://twitter.com/stacy_muur/status/2016335173345026422" target="_blank" rel="noopener">
+          <div class="card-title">AERO vs UNI Yield Comparison <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">$4,167/yr on AERO vs $56/yr on UNI for $10K</div>
+          <div class="card-author">@stacy_muur</div>
+        </a>
+        <a class="card" href="https://twitter.com/omeragoldberg/status/2017307423867068457" target="_blank" rel="noopener">
+          <div class="card-title">Elevated Yields == Risk <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Risk awareness for yield chasers</div>
+          <div class="card-author">@omeragoldberg</div>
+        </a>
+      </div>
+    </section>
+
+    <!-- RWA & Tokenization -->
+    <section class="section" id="rwa" data-color="cyan">
+      <div class="section-header">
+        <div class="section-icon">&#9670;</div>
+        <h2 class="section-title">RWA & Tokenization</h2>
+      </div>
+      <p class="section-desc">Real-world asset tokenization, settlement, and institutional onboarding.</p>
+      <div class="cards">
+        <a class="card" href="https://twitter.com/Delphi_Digital/status/2020543954253406364" target="_blank" rel="noopener">
+          <div class="card-title">Canton Network: Wall Street Is Already Onchain <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Delphi Digital deep dive on Canton</div>
+          <div class="card-author">@Delphi_Digital</div>
+        </a>
+        <a class="card" href="https://twitter.com/OAK_Res/status/2016173087826358606" target="_blank" rel="noopener">
+          <div class="card-title">RWAs: Who Captures Value in Tokenization? <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Value capture analysis across the tokenization stack</div>
+          <div class="card-author">@OAK_Res</div>
+        </a>
+        <a class="card" href="https://twitter.com/KeyringNetwork/status/2031918652690162057" target="_blank" rel="noopener">
+          <div class="card-title">How RWA Unwind Solves Settlement <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">RWA settlement mechanics</div>
+          <div class="card-author">@KeyringNetwork</div>
+        </a>
+        <a class="card" href="https://twitter.com/Zharta/status/2029207716556575198" target="_blank" rel="noopener">
+          <div class="card-title">Zharta x Securitize: First Async Redemption Unwind <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Leveraged positions on tokenized securities via ACRED</div>
+          <div class="card-author">@Zharta</div>
+        </a>
+        <a class="card" href="https://twitter.com/grahamfergs/status/2027140240675422692" target="_blank" rel="noopener">
+          <div class="card-title">Securities Must Behave Like DeFi-Native Assets <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Why effective onchain security distribution requires DeFi-native behavior</div>
+          <div class="card-author">@grahamfergs</div>
+        </a>
+        <a class="card" href="https://twitter.com/Securitize/status/2016635097760616574" target="_blank" rel="noopener">
+          <div class="card-title">Securitize & Cantor Equity Partners II <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Public filing of registration statement</div>
+          <div class="card-author">@Securitize</div>
+        </a>
+        <a class="card" href="https://twitter.com/sparkdotfi/status/2021465769125740598" target="_blank" rel="noopener">
+          <div class="card-title">Spark Prime Partnerships <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Edge Capital ($600M), M1 ($180M), Hardcore Labs ($100M) and more</div>
+          <div class="card-author">@sparkdotfi</div>
+        </a>
+        <a class="card" href="https://twitter.com/inside_r3/status/2023819040146550821" target="_blank" rel="noopener">
+          <div class="card-title">R3 CEO on Private Corda, Solana DeFi, and Yield Vaults <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Deep dive on the future of DeFi on Solana and assets bridging onchain</div>
+          <div class="card-author">@inside_r3</div>
+        </a>
+        <a class="card" href="https://wublockchain.xyz/news/news-18605" target="_blank" rel="noopener">
+          <div class="card-title">Solana Agent Skills Launch <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">On-chain ops via embedded agent skills &mdash; Apr 6, 2026</div>
+          <div class="card-author">Wu Blockchain</div>
+        </a>
+        <a class="card" href="https://x.com/hasufl/status/2041519865022808331" target="_blank" rel="noopener">
+          <div class="card-title">Hasu on RWA <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Apr 7, 2026</div>
+          <div class="card-author">@hasufl</div>
+        </a>
+        <a class="card" href="https://x.com/keyringnetwork/status/2041871972796096566" target="_blank" rel="noopener">
+          <div class="card-title">Keyring Network Update <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Apr 8, 2026</div>
+          <div class="card-author">@keyringnetwork</div>
+        </a>
+        <a class="card" href="https://x.com/minara/status/2044432012002635843" target="_blank" rel="noopener">
+          <div class="card-title">Minara <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Forwarded by Upkar Gata-Aura &mdash; Apr 16, 2026</div>
+          <div class="card-author">@minara</div>
+        </a>
+        <a class="card" href="https://x.com/daonamic/status/2044099738534826245" target="_blank" rel="noopener">
+          <div class="card-title">Daonamic <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Apr 17, 2026</div>
+          <div class="card-author">@daonamic</div>
+        </a>
+        <a class="card" href="https://x.com/sebventures/status/2046863348315148736" target="_blank" rel="noopener">
+          <div class="card-title">S&eacute;bastien Derivaux / Steakhouse <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Apr 22, 2026</div>
+          <div class="card-author">@sebventures</div>
+        </a>
+      </div>
+    </section>
+
+    <!-- Trading & Quant -->
+    <section class="section" id="trading" data-color="red">
+      <div class="section-header">
+        <div class="section-icon">&#9650;</div>
+        <h2 class="section-title">Trading & Quantitative Finance</h2>
+      </div>
+      <p class="section-desc">Crypto trading strategies, quant methods, and market structure.</p>
+      <div class="cards">
+        <a class="card" href="https://twitter.com/Axel_bitblaze69/status/2032432210511593492" target="_blank" rel="noopener">
+          <div class="card-title">Automate Crypto Research Using AI <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">From manual CT reading to AI-automated research workflow</div>
+          <div class="card-author">@Axel_bitblaze69</div>
+        </a>
+        <a class="card" href="https://twitter.com/gemchange_ltd/status/2028904166895112617" target="_blank" rel="noopener">
+          <div class="card-title">How to Become a Quant (Start Over) <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Career restart guide for aspiring quants</div>
+          <div class="card-author">@gemchanger</div>
+        </a>
+        <a class="card" href="https://twitter.com/gemchange_ltd/status/2027744530124951831" target="_blank" rel="noopener">
+          <div class="card-title">Simulate Like a Quant Desk <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Every model, every formula, with runnable code</div>
+          <div class="card-author">@gemchanger</div>
+        </a>
+        <a class="card" href="https://twitter.com/intern_cc/status/2009141835604861297" target="_blank" rel="noopener">
+          <div class="card-title">Pair Trading Altcoins: Statistical Arbitrage <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Statistical arbitrage framework for altcoin pair trading</div>
+          <div class="card-author">@intern_cc</div>
+        </a>
+        <a class="card" href="https://twitter.com/guil_lambert/status/2011207451149029611" target="_blank" rel="noopener">
+          <div class="card-title">Hedging LP Positions <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Options-world approach to hedging LP positions</div>
+          <div class="card-author">@guil_lambert</div>
+        </a>
+        <a class="card" href="https://twitter.com/0xnagu/status/2013352324996194375" target="_blank" rel="noopener">
+          <div class="card-title">Auto-Deleveraging (ADL) from First Principles <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Understanding ADL mechanics beyond queues</div>
+          <div class="card-author">@0xnagu</div>
+        </a>
+        <a class="card" href="https://twitter.com/D2_Finance/status/2005512271553028356" target="_blank" rel="noopener">
+          <div class="card-title">Perps vs Options <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Why options are the only instrument for turning low 4-figure bets into outsized returns</div>
+          <div class="card-author">@D2_Finance</div>
+        </a>
+        <a class="card" href="https://twitter.com/arrighiPA/status/2024917539420078384" target="_blank" rel="noopener">
+          <div class="card-title">TrenchFu: Bloomberg Terminal of Prediction Markets <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Prediction market terminal on Solana</div>
+          <div class="card-author">@arrighiPA</div>
+        </a>
+        <a class="card" href="https://twitter.com/ugotrd/status/2005741379843178688" target="_blank" rel="noopener">
+          <div class="card-title">Wallet Tracking: $50 to $1M+ <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">How wallet tracking led to 7-figure returns at 18</div>
+          <div class="card-author">@ugotrd</div>
+        </a>
+        <a class="card" href="https://twitter.com/TrungTPhan/status/2011878977577906331" target="_blank" rel="noopener">
+          <div class="card-title">Sportsbetting Sharp Throttling <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">The Economist on how apps throttle skilled bettors</div>
+          <div class="card-author">@TrungTPhan</div>
+        </a>
+        <a class="card" href="https://x.com/buildwithpublic/status/2044790902019727863" target="_blank" rel="noopener">
+          <div class="card-title">Claude + Public Brokerage <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Equities/options/crypto/bonds via Claude &mdash; Apr 17, 2026</div>
+          <div class="card-author">@buildwithpublic</div>
+        </a>
+        <a class="card" href="https://x.com/milesdeutscher/status/2044536031991763414" target="_blank" rel="noopener">
+          <div class="card-title">Claude &harr; TradingView Full Guide <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Miles Deutscher on the Claude+TradingView workflow &mdash; Apr 18, 2026</div>
+          <div class="card-author">@milesdeutscher</div>
+        </a>
+        <a class="card" href="https://x.com/seelffff/status/2044868944830644317" target="_blank" rel="noopener">
+          <div class="card-title">seelffff Market Take <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Trading commentary &mdash; Apr 17, 2026</div>
+          <div class="card-author">@seelffff</div>
+        </a>
+        <a class="card" href="https://x.com/NotDeGhost/status/2045219558194139411" target="_blank" rel="noopener">
+          <div class="card-title">NotDeGhost Market Take <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Trading commentary &mdash; Apr 18, 2026</div>
+          <div class="card-author">@NotDeGhost</div>
+        </a>
+      </div>
+    </section>
+
+    <!-- Protocol & Chain Economics -->
+    <section class="section" id="protocols" data-color="orange">
+      <div class="section-header">
+        <div class="section-icon">&#9881;</div>
+        <h2 class="section-title">Protocol & Chain Economics</h2>
+      </div>
+      <p class="section-desc">Costs, infrastructure, governance, and token launches.</p>
+      <div class="cards">
+        <a class="card" href="https://twitter.com/moo9000/status/2027043769200128234" target="_blank" rel="noopener">
+          <div class="card-title">Chain Infrastructure Mafia Payments <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">RPC, bridges, and service costs: Alchemy $750K, Quicknode $500K, LayerZero $375K</div>
+          <div class="card-author">@moo9000</div>
+        </a>
+        <a class="card" href="https://twitter.com/gregory_raymond/status/2026713206467735625" target="_blank" rel="noopener">
+          <div class="card-title">MEV Capital Collapse <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Anatomy of collapse and takeover by Belem Capital</div>
+          <div class="card-author">@gregory_raymond</div>
+        </a>
+        <a class="card" href="https://twitter.com/KSimback/status/2013961731135918586" target="_blank" rel="noopener">
+          <div class="card-title">TGE Models That Work <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Why most VC-funded TGEs fail and the 2 models that work</div>
+          <div class="card-author">@KSimback</div>
+        </a>
+        <a class="card" href="https://twitter.com/0xzak/status/2009079978156343308" target="_blank" rel="noopener">
+          <div class="card-title">Token Distribution Guide <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">5 years of research on fair token distribution and capital formation</div>
+          <div class="card-author">@0xzak</div>
+        </a>
+        <a class="card" href="https://twitter.com/chaoslabs/status/2009705038802034769" target="_blank" rel="noopener">
+          <div class="card-title">Chaos Labs: AI for Risk-Aware Execution <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">AI as operational infrastructure for DeFi risk</div>
+          <div class="card-author">@chaoslabs</div>
+        </a>
+        <a class="card" href="https://twitter.com/BarterDeFi/status/2015493258982679002" target="_blank" rel="noopener">
+          <div class="card-title">Private Liquidity on Ethereum <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">WTF is private liquidity</div>
+          <div class="card-author">@BarterDeFi</div>
+        </a>
+        <a class="card" href="https://twitter.com/BarterDeFi/status/1991255424461631547" target="_blank" rel="noopener">
+          <div class="card-title">Superposition ELI5 <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Barter's Superposition explained simply</div>
+          <div class="card-author">@BarterDeFi</div>
+        </a>
+        <a class="card" href="https://twitter.com/Shade_L2/status/2005736075218563399" target="_blank" rel="noopener">
+          <div class="card-title">Shade: The Private L2 <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Introduction to privacy-focused L2</div>
+          <div class="card-author">@Shade_L2</div>
+        </a>
+        <a class="card" href="https://twitter.com/bjnpck/status/2014627928261231073" target="_blank" rel="noopener">
+          <div class="card-title">HoudiniSwap: Privacy Tool for Wallet Funding <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Fund new wallets or request payments privately</div>
+          <div class="card-author">@bjnpck</div>
+        </a>
+      </div>
+    </section>
+
+    <!-- Investment & Career -->
+    <section class="section" id="investment" data-color="lavender">
+      <div class="section-header">
+        <div class="section-icon">&#9733;</div>
+        <h2 class="section-title">Crypto Investment & Career</h2>
+      </div>
+      <p class="section-desc">Investment theses, opportunity spotting, and personal development.</p>
+      <div class="cards">
+        <a class="card" href="https://twitter.com/lawmaster/status/2027048529600864540" target="_blank" rel="noopener">
+          <div class="card-title">Open-Source Crypto Book (15 Chapters) <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Larry Cermak & Frank: covers everything from BTC to DeFi</div>
+          <div class="card-author">@lawmaster</div>
+        </a>
+        <a class="card" href="https://twitter.com/MariaShen/status/2014040761164063012" target="_blank" rel="noopener">
+          <div class="card-title">26 Ideas in User-Owned Tech <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Electric Capital's investment thesis: finance, privacy, access</div>
+          <div class="card-author">@MariaShen</div>
+        </a>
+        <a class="card" href="https://twitter.com/DeFiMinty/status/2007850521890349135" target="_blank" rel="noopener">
+          <div class="card-title">What I'm Most Excited For in 2026 <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Ostium, Lightcone, MegaETH and more</div>
+          <div class="card-author">@DeFiMinty</div>
+        </a>
+        <a class="card" href="https://twitter.com/charliemktplace/status/2008137979340968001" target="_blank" rel="noopener">
+          <div class="card-title">Charlie for Head of DeFi @ OP <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Application/thesis on DeFi at Optimism</div>
+          <div class="card-author">@charliemktplace</div>
+        </a>
+        <a class="card" href="https://twitter.com/redhairshanks86/status/2021632354649821275" target="_blank" rel="noopener">
+          <div class="card-title">User Incentives or Die <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Why incentivizing early adopters is non-negotiable</div>
+          <div class="card-author">@redhairshanks86</div>
+        </a>
+        <a class="card" href="https://twitter.com/yasminekho/status/2029909767364461031" target="_blank" rel="noopener">
+          <div class="card-title">Masterclass: Think Fast, Speak Smart <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Stanford prof Matt Abrahams on clarity under pressure</div>
+          <div class="card-author">@yasminekho</div>
+        </a>
+        <a class="card" href="https://twitter.com/naval/status/1990623985927921701" target="_blank" rel="noopener">
+          <div class="card-title">Naval: Recruiting Podcast <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Curating people, hiring, and breaking rules to recruit the best</div>
+          <div class="card-author">@naval</div>
+        </a>
+        <a class="card" href="https://twitter.com/hosseeb/status/2011185484844949774" target="_blank" rel="noopener">
+          <div class="card-title">Building an Audience on X <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Repeatable strategy for building a CT audience</div>
+          <div class="card-author">@hosseeb</div>
+        </a>
+        <a class="card" href="https://twitter.com/leadlagreport/status/2017685767242256712" target="_blank" rel="noopener">
+          <div class="card-title">Japan Reverse Carry Trade <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Original long-form video explaining the thesis</div>
+          <div class="card-author">@leadlagreport</div>
+        </a>
+      </div>
+    </section>
+
+    <!-- DeFi Protocols & Research (Telegram) -->
+    <section class="section" id="defi-protocols-research" data-color="blue">
+      <div class="section-header">
+        <div class="section-icon">&#9634;</div>
+        <h2 class="section-title">DeFi Protocols & Research</h2>
+      </div>
+      <p class="section-desc">Protocol mechanics, LP strategies, lending models, and DeFi tooling.</p>
+      <div class="cards">
+        <a class="card" href="https://defillama.com/chains" target="_blank" rel="noopener">
+          <div class="card-title">DefiLlama &mdash; Chains Overview <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Multi-chain TVL and protocol data</div>
+          <div class="card-author">DefiLlama</div>
+        </a>
+        <a class="card" href="https://token.unlocks.app/" target="_blank" rel="noopener">
+          <div class="card-title">Token Unlocks Tracker <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Track upcoming token unlock schedules</div>
+          <div class="card-author">token.unlocks.app</div>
+        </a>
+        <a class="card" href="https://pendle.medium.com/boros-introducing-funding-futures-d1f69111a8a7" target="_blank" rel="noopener">
+          <div class="card-title">Pendle Boros: Funding Futures <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Introducing funding rate futures by Pendle</div>
+          <div class="card-author">Pendle</div>
+        </a>
+        <a class="card" href="https://www.linkedin.com/posts/sambroner_stablecoins-will-eat-payments-because-of-activity-7302785026050453504-s8dK" target="_blank" rel="noopener">
+          <div class="card-title">Stablecoins Will Eat Payments <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Why stablecoins will dominate the payments stack</div>
+          <div class="card-author">Sam Broner</div>
+        </a>
+        <a class="card" href="https://paragraph.com/@keyringnetwork/stuck-in-the-1970s" target="_blank" rel="noopener">
+          <div class="card-title">Keyring: Stuck in the 1970s <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Swaps market &amp; yield curve analysis</div>
+          <div class="card-author">Keyring Network</div>
+        </a>
+        <a class="card" href="https://blog.api3.org/introducing-oev-boosted-morpho-markets/" target="_blank" rel="noopener">
+          <div class="card-title">API3 OEV-Boosted Morpho Markets <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Oracle extractable value meets Morpho lending</div>
+          <div class="card-author">API3</div>
+        </a>
+        <a class="card" href="https://threadingontheedge.substack.com/p/the-thing-that-monetizes-crypto-insights" target="_blank" rel="noopener">
+          <div class="card-title">Monetizing Crypto Insights <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">The business model behind crypto research</div>
+          <div class="card-author">Threading on the Edge</div>
+        </a>
+      </div>
+    </section>
+
+    <!-- On-Chain Analytics -->
+    <section class="section" id="analytics" data-color="green">
+      <div class="section-header">
+        <div class="section-icon">&#9632;</div>
+        <h2 class="section-title">On-Chain Analytics & Tracking Tools</h2>
+      </div>
+      <p class="section-desc">Dashboards, trackers, and on-chain intelligence platforms.</p>
+      <div class="cards">
+        <a class="card" href="https://dune.com/cypherpepe/airdrops-and-wallets-v2" target="_blank" rel="noopener">
+          <div class="card-title">Dune &mdash; Airdrop Wallets Dashboard <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Track airdrop-eligible wallets</div>
+          <div class="card-author">Dune Analytics</div>
+        </a>
+        <a class="card" href="https://dune.com/defimochi/shitcoin-whale-watcher" target="_blank" rel="noopener">
+          <div class="card-title">Dune &mdash; Shitcoin Whale Watcher <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Monitor whale activity in small-cap tokens</div>
+          <div class="card-author">Dune Analytics</div>
+        </a>
+        <a class="card" href="https://dexscreener.com/" target="_blank" rel="noopener">
+          <div class="card-title">DexScreener <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">DEX pair tracker</div>
+          <div class="card-author">DexScreener</div>
+        </a>
+        <a class="card" href="https://tokensniffer.com/" target="_blank" rel="noopener">
+          <div class="card-title">TokenSniffer <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Token safety checker</div>
+          <div class="card-author">TokenSniffer</div>
+        </a>
+        <a class="card" href="https://glassno.de/4nDmNQG" target="_blank" rel="noopener">
+          <div class="card-title">Glassnode <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">On-chain market intelligence</div>
+          <div class="card-author">Glassnode</div>
+        </a>
+        <a class="card" href="https://www.arkhamintelligence.com/announcements/ton-is-now-live-on-arkham" target="_blank" rel="noopener">
+          <div class="card-title">Arkham Intelligence (TON Support) <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Entity-level on-chain intelligence</div>
+          <div class="card-author">Arkham</div>
+        </a>
+        <a class="card" href="https://explorer.phalcon.xyz/" target="_blank" rel="noopener">
+          <div class="card-title">Phalcon Explorer <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Transaction tracer and debugger</div>
+          <div class="card-author">Phalcon</div>
+        </a>
+        <a class="card" href="https://censorship.pics/" target="_blank" rel="noopener">
+          <div class="card-title">Ethereum Censorship Tracker <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Monitor block-level censorship on Ethereum</div>
+          <div class="card-author">censorship.pics</div>
+        </a>
+        <a class="card" href="https://solanacompass.com/statistics/fees" target="_blank" rel="noopener">
+          <div class="card-title">Solana Compass &mdash; Fees <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Solana fee statistics and trends</div>
+          <div class="card-author">Solana Compass</div>
+        </a>
+        <a class="card" href="https://www.stakingrewards.com/asset/solana" target="_blank" rel="noopener">
+          <div class="card-title">Staking Rewards &mdash; Solana <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Solana staking yields and validators</div>
+          <div class="card-author">Staking Rewards</div>
+        </a>
+        <a class="card" href="https://cogentcrypto.io/ValidatorProfitCalculator" target="_blank" rel="noopener">
+          <div class="card-title">Cogent Crypto Validator Profit Calculator <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Calculate validator profitability</div>
+          <div class="card-author">Cogent Crypto</div>
+        </a>
+        <a class="card" href="https://airdroptracker.notion.site/0180555ffe5249009c4096f97b2fb046?v=4bafb955f76c403f84564d383965104d" target="_blank" rel="noopener">
+          <div class="card-title">Airdrop Tracker (Notion) <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Community-maintained airdrop database</div>
+          <div class="card-author">Notion</div>
+        </a>
+      </div>
+    </section>
+
+    <!-- Tokenomics -->
+    <section class="section" id="tokenomics" data-color="fuchsia">
+      <div class="section-header">
+        <div class="section-icon">&#10070;</div>
+        <h2 class="section-title">Tokenomics Resources</h2>
+      </div>
+      <p class="section-desc">Frameworks, courses, and tools for token design and economics.</p>
+      <div class="cards">
+        <a class="card" href="https://linktr.ee/tokenomicsdao" target="_blank" rel="noopener">
+          <div class="card-title">Tokenomics DAO <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Community hub for tokenomics education</div>
+          <div class="card-author">Tokenomics DAO</div>
+        </a>
+        <a class="card" href="https://tokenengineering.net/" target="_blank" rel="noopener">
+          <div class="card-title">Token Engineering Academy <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Courses on token design and engineering</div>
+          <div class="card-author">TE Academy</div>
+        </a>
+        <a class="card" href="https://tokenomia.pro/" target="_blank" rel="noopener">
+          <div class="card-title">Tokenomia Pro <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Professional tokenomics modeling tools</div>
+          <div class="card-author">Tokenomia</div>
+        </a>
+        <a class="card" href="http://www.tokenengineeringlabs.com/" target="_blank" rel="noopener">
+          <div class="card-title">Token Engineering Labs <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Research lab for token systems</div>
+          <div class="card-author">TE Labs</div>
+        </a>
+        <a class="card" href="https://blacktokenomics.com/" target="_blank" rel="noopener">
+          <div class="card-title">Black Tokenomics <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Tokenomics analysis and resources</div>
+          <div class="card-author">Black Tokenomics</div>
+        </a>
+        <a class="card" href="https://twitter.com/mattyTokenomics" target="_blank" rel="noopener">
+          <div class="card-title">@mattyTokenomics <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Tokenomics commentary and analysis</div>
+          <div class="card-author">@mattyTokenomics</div>
+        </a>
+        <a class="card" href="https://medium.com/@PERQ/all-you-need-to-know-about-the-perq-token-economy-5ca61d19f83f" target="_blank" rel="noopener">
+          <div class="card-title">PERQ Token Economy Explainer <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Complete breakdown of PERQ's token model</div>
+          <div class="card-author">PERQ</div>
+        </a>
+      </div>
+    </section>
+
+    <!-- DeFi Apps -->
+    <section class="section" id="defi-apps" data-color="gold">
+      <div class="section-header">
+        <div class="section-icon">&#9889;</div>
+        <h2 class="section-title">DeFi Protocols & Apps</h2>
+      </div>
+      <p class="section-desc">Specific protocol links, tools, and product launches.</p>
+      <div class="cards">
+        <a class="card" href="https://app.hyperliquid.xyz/join/paradigm" target="_blank" rel="noopener">
+          <div class="card-title">HyperLiquid <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Perp DEX with airdrop</div>
+          <div class="card-author">HyperLiquid</div>
+        </a>
+        <a class="card" href="https://app.sparkprotocol.io/markets/" target="_blank" rel="noopener">
+          <div class="card-title">Spark Protocol <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">MakerDAO's lending protocol</div>
+          <div class="card-author">Spark</div>
+        </a>
+        <a class="card" href="https://app.superform.xyz/" target="_blank" rel="noopener">
+          <div class="card-title">Superform <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Cross-chain yield aggregation</div>
+          <div class="card-author">Superform</div>
+        </a>
+        <a class="card" href="https://dydx.exchange/" target="_blank" rel="noopener">
+          <div class="card-title">dYdX <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Decentralized derivatives exchange</div>
+          <div class="card-author">dYdX</div>
+        </a>
+        <a class="card" href="https://app.pacifica.fi?referral=mendo" target="_blank" rel="noopener">
+          <div class="card-title">Pacifica Finance <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Trading platform (early stage)</div>
+          <div class="card-author">Pacifica</div>
+        </a>
+        <a class="card" href="https://herd.eco/home" target="_blank" rel="noopener">
+          <div class="card-title">Herd <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Apr 5, 2026</div>
+          <div class="card-author">Herd</div>
+        </a>
+        <a class="card" href="https://ethena.fi/blog/usde-backing-diversification-building-resilience-across-market-cycles" target="_blank" rel="noopener">
+          <div class="card-title">Ethena: USDe Backing Diversification <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Building resilience across market cycles &mdash; Apr 6, 2026</div>
+          <div class="card-author">Ethena</div>
+        </a>
+        <a class="card" href="https://own-protocol.gitbook.io/docs" target="_blank" rel="noopener">
+          <div class="card-title">Own Protocol Docs <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Apr 9, 2026</div>
+          <div class="card-author">Own Protocol</div>
+        </a>
+        <a class="card" href="https://ember.so/earn/pALPHA" target="_blank" rel="noopener">
+          <div class="card-title">Ember &mdash; pALPHA Earn <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Apr 15, 2026</div>
+          <div class="card-author">Ember</div>
+        </a>
+      </div>
+    </section>
+
+    <!-- Security & OpSec -->
+    <section class="section" id="security" data-color="pink">
+      <div class="section-header">
+        <div class="section-icon">&#9888;</div>
+        <h2 class="section-title">Security & OpSec</h2>
+      </div>
+      <p class="section-desc">Operational security, hack prevention, and privacy tools.</p>
+      <div class="cards">
+        <a class="card" href="https://github.com/OffcierCia/Crypto-OpSec-SelfGuard-RoadMap" target="_blank" rel="noopener">
+          <div class="card-title">Crypto OpSec Self-Guard Roadmap <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Comprehensive security roadmap on GitHub</div>
+          <div class="card-author">GitHub</div>
+        </a>
+        <a class="card" href="https://www.hypernative.io/" target="_blank" rel="noopener">
+          <div class="card-title">Hypernative <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Hack prevention &amp; real-time monitoring</div>
+          <div class="card-author">Hypernative</div>
+        </a>
+        <a class="card" href="https://www.cryptocardhub.com/categories/no-kyc" target="_blank" rel="noopener">
+          <div class="card-title">CryptoCardHub: No-KYC Cards <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Privacy-focused crypto card options</div>
+          <div class="card-author">CryptoCardHub</div>
+        </a>
+        <a class="card" href="https://x.com/phtevenstrong/status/2045688385465938098" target="_blank" rel="noopener">
+          <div class="card-title">Audit Firm Options <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Get quotes before locking in &mdash; Apr 19, 2026</div>
+          <div class="card-author">@phtevenstrong</div>
+        </a>
+      </div>
+    </section>
+
+    <!-- Other -->
+    <section class="section" id="other" data-color="sky">
+      <div class="section-header">
+        <div class="section-icon">&#10022;</div>
+        <h2 class="section-title">Other Notable</h2>
+      </div>
+      <p class="section-desc">Miscellaneous resources and web3 company data.</p>
+      <div class="cards">
+        <a class="card" href="https://docs.farcaster.xyz/" target="_blank" rel="noopener">
+          <div class="card-title">Farcaster Docs <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Developer documentation for the Farcaster protocol</div>
+          <div class="card-author">Farcaster</div>
+        </a>
+        <a class="card" href="https://www.highagency.com/?s=09" target="_blank" rel="noopener">
+          <div class="card-title">High Agency <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Really good post, not related to crypto (but shared in crypto context)</div>
+          <div class="card-author">High Agency</div>
+        </a>
+        <a class="card" href="https://yaps.kaito.ai/referral/944507770342166528" target="_blank" rel="noopener">
+          <div class="card-title">Kaito Yaps <span class="arrow">&#8599;</span></div>
+          <div class="card-desc">Crypto social intelligence platform</div>
+          <div class="card-author">Kaito</div>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>Curated Crypto & DeFi Research &middot; Last updated 2026</p>
+  </footer>
+
+</body>
+</html>
