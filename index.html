@@ -537,6 +537,144 @@
     .form-msg.error { color: #ff6b6b; }
     .form-msg.success { color: #34d399; }
 
+    /* ── Memory filter ── */
+    .filter-section {
+      margin-top: 18px;
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .filter-head { margin-bottom: 14px; }
+
+    .filter-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent2);
+      margin-bottom: 6px;
+    }
+
+    .filter-sub {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .criterion { margin-bottom: 12px; }
+    .criterion:last-of-type { margin-bottom: 0; }
+
+    .criterion-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 6px;
+      flex-wrap: wrap;
+    }
+
+    .criterion-name {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .criterion-hint {
+      font-size: 0.72rem;
+      color: var(--text-dim);
+    }
+
+    .rating {
+      display: flex;
+      gap: 4px;
+    }
+
+    .rating-btn {
+      flex: 1;
+      position: relative;
+      cursor: pointer;
+      margin: 0;
+    }
+
+    .rating-btn input {
+      position: absolute;
+      opacity: 0;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+      margin: 0;
+    }
+
+    .rating-btn span {
+      display: block;
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: 600;
+      font-family: 'JetBrains Mono', monospace;
+      padding: 8px 0;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--text-muted);
+      transition: all 0.15s;
+    }
+
+    .rating-btn:hover span {
+      border-color: var(--border-hover);
+      color: var(--text);
+    }
+
+    .rating-btn input:checked + span {
+      background: var(--accent2-glow);
+      border-color: var(--accent2);
+      color: var(--accent2);
+    }
+
+    .verdict {
+      margin-top: 14px;
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .verdict-score {
+      font-size: 0.85rem;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .verdict-text {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      flex: 1;
+      text-align: right;
+      min-width: 140px;
+    }
+
+    .verdict.pass { border-color: var(--accent2); }
+    .verdict.pass .verdict-score,
+    .verdict.pass .verdict-text { color: var(--accent2); }
+
+    .verdict.warn { border-color: var(--accent4); }
+    .verdict.warn .verdict-score,
+    .verdict.warn .verdict-text { color: var(--accent4); }
+
+    .verdict.fail { border-color: var(--accent3); }
+    .verdict.fail .verdict-score,
+    .verdict.fail .verdict-text { color: var(--accent3); }
+
     .honeypot {
       position: absolute;
       left: -9999px;
@@ -1292,6 +1430,12 @@
     <input type="text" name="section" />
     <input type="text" name="author" />
     <input type="text" name="submitter" />
+    <input type="text" name="reproducibility" />
+    <input type="text" name="nontriviality" />
+    <input type="text" name="provability" />
+    <input type="text" name="relevance" />
+    <input type="text" name="longevity" />
+    <input type="text" name="memory_score" />
     <input type="text" name="bot-field" />
   </form>
 
@@ -1337,12 +1481,95 @@
           <label for="f-submitter">Your name <span style="text-transform:none;color:var(--text-dim);">(optional)</span></label>
           <input type="text" id="f-submitter" name="submitter" maxlength="80" placeholder="So we can credit you" />
         </div>
+
+        <div class="filter-section">
+          <div class="filter-head">
+            <div class="filter-title">Memory filter</div>
+            <p class="filter-sub">Rate each criterion 1&ndash;5 (higher is better). Submission unlocks at 15/25.</p>
+          </div>
+
+          <div class="criterion">
+            <div class="criterion-head">
+              <span class="criterion-name">Reproducibility</span>
+              <span class="criterion-hint">Can what's described be repeated?</span>
+            </div>
+            <div class="rating">
+              <label class="rating-btn"><input type="radio" name="reproducibility" value="1" /><span>1</span></label>
+              <label class="rating-btn"><input type="radio" name="reproducibility" value="2" /><span>2</span></label>
+              <label class="rating-btn"><input type="radio" name="reproducibility" value="3" /><span>3</span></label>
+              <label class="rating-btn"><input type="radio" name="reproducibility" value="4" /><span>4</span></label>
+              <label class="rating-btn"><input type="radio" name="reproducibility" value="5" /><span>5</span></label>
+            </div>
+          </div>
+
+          <div class="criterion">
+            <div class="criterion-head">
+              <span class="criterion-name">Non-triviality</span>
+              <span class="criterion-hint">Beyond what LLMs / common knowledge already cover?</span>
+            </div>
+            <div class="rating">
+              <label class="rating-btn"><input type="radio" name="nontriviality" value="1" /><span>1</span></label>
+              <label class="rating-btn"><input type="radio" name="nontriviality" value="2" /><span>2</span></label>
+              <label class="rating-btn"><input type="radio" name="nontriviality" value="3" /><span>3</span></label>
+              <label class="rating-btn"><input type="radio" name="nontriviality" value="4" /><span>4</span></label>
+              <label class="rating-btn"><input type="radio" name="nontriviality" value="5" /><span>5</span></label>
+            </div>
+          </div>
+
+          <div class="criterion">
+            <div class="criterion-head">
+              <span class="criterion-name">Provability</span>
+              <span class="criterion-hint">Backed by sources or evidence?</span>
+            </div>
+            <div class="rating">
+              <label class="rating-btn"><input type="radio" name="provability" value="1" /><span>1</span></label>
+              <label class="rating-btn"><input type="radio" name="provability" value="2" /><span>2</span></label>
+              <label class="rating-btn"><input type="radio" name="provability" value="3" /><span>3</span></label>
+              <label class="rating-btn"><input type="radio" name="provability" value="4" /><span>4</span></label>
+              <label class="rating-btn"><input type="radio" name="provability" value="5" /><span>5</span></label>
+            </div>
+          </div>
+
+          <div class="criterion">
+            <div class="criterion-head">
+              <span class="criterion-name">Relevance</span>
+              <span class="criterion-hint">Inside your sphere of interests?</span>
+            </div>
+            <div class="rating">
+              <label class="rating-btn"><input type="radio" name="relevance" value="1" /><span>1</span></label>
+              <label class="rating-btn"><input type="radio" name="relevance" value="2" /><span>2</span></label>
+              <label class="rating-btn"><input type="radio" name="relevance" value="3" /><span>3</span></label>
+              <label class="rating-btn"><input type="radio" name="relevance" value="4" /><span>4</span></label>
+              <label class="rating-btn"><input type="radio" name="relevance" value="5" /><span>5</span></label>
+            </div>
+          </div>
+
+          <div class="criterion">
+            <div class="criterion-head">
+              <span class="criterion-name">Longevity</span>
+              <span class="criterion-hint">How slowly will it become outdated?</span>
+            </div>
+            <div class="rating">
+              <label class="rating-btn"><input type="radio" name="longevity" value="1" /><span>1</span></label>
+              <label class="rating-btn"><input type="radio" name="longevity" value="2" /><span>2</span></label>
+              <label class="rating-btn"><input type="radio" name="longevity" value="3" /><span>3</span></label>
+              <label class="rating-btn"><input type="radio" name="longevity" value="4" /><span>4</span></label>
+              <label class="rating-btn"><input type="radio" name="longevity" value="5" /><span>5</span></label>
+            </div>
+          </div>
+
+          <div class="verdict" id="verdict">
+            <div class="verdict-score"><span id="score">0</span> / 25</div>
+            <div class="verdict-text" id="verdict-text">Rate all 5 criteria to unlock submission.</div>
+          </div>
+        </div>
+
         <div class="honeypot" aria-hidden="true">
           <label>Don't fill this out: <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
         </div>
         <div class="modal-actions">
           <button type="button" class="btn" id="cancel-add">Cancel</button>
-          <button type="submit" class="btn btn-primary" id="submit-add">Submit</button>
+          <button type="submit" class="btn btn-primary" id="submit-add" disabled>Submit</button>
         </div>
         <p class="form-msg" id="form-msg"></p>
       </form>
@@ -1364,10 +1591,68 @@
       var msg = document.getElementById('form-msg');
       var submitBtn = document.getElementById('submit-add');
 
+      var ratingNames = ['reproducibility', 'nontriviality', 'provability', 'relevance', 'longevity'];
+      var verdictEl = document.getElementById('verdict');
+      var scoreEl = document.getElementById('score');
+      var verdictTextEl = document.getElementById('verdict-text');
+      var PASS_MIN = 20;
+      var WARN_MIN = 15;
+
+      function readRatings() {
+        var total = 0;
+        var rated = 0;
+        var values = {};
+        ratingNames.forEach(function (name) {
+          var checked = form.querySelector('input[name="' + name + '"]:checked');
+          if (checked) {
+            var v = parseInt(checked.value, 10);
+            total += v;
+            rated++;
+            values[name] = v;
+          } else {
+            values[name] = '';
+          }
+        });
+        return { total: total, rated: rated, values: values };
+      }
+
+      function updateVerdict() {
+        var r = readRatings();
+        scoreEl.textContent = r.total;
+
+        if (r.rated < ratingNames.length) {
+          verdictEl.className = 'verdict';
+          verdictTextEl.textContent = 'Rate all 5 to unlock submission (' + r.rated + '/5).';
+          submitBtn.disabled = true;
+          return;
+        }
+
+        if (r.total >= PASS_MIN) {
+          verdictEl.className = 'verdict pass';
+          verdictTextEl.textContent = 'Worth adding to memory.';
+          submitBtn.disabled = false;
+        } else if (r.total >= WARN_MIN) {
+          verdictEl.className = 'verdict warn';
+          verdictTextEl.textContent = 'Borderline — submit only if you’re sure.';
+          submitBtn.disabled = false;
+        } else {
+          verdictEl.className = 'verdict fail';
+          verdictTextEl.textContent = 'Below threshold — not worth keeping.';
+          submitBtn.disabled = true;
+        }
+      }
+
+      form.addEventListener('change', function (e) {
+        if (e.target && e.target.type === 'radio' && ratingNames.indexOf(e.target.name) !== -1) {
+          updateVerdict();
+        }
+      });
+
       function open() {
         modal.classList.add('open');
         msg.textContent = '';
         msg.className = 'form-msg';
+        updateVerdict();
         setTimeout(function () {
           var pw = document.getElementById('f-password');
           if (pw) pw.focus();
@@ -1410,6 +1695,13 @@
         submitBtn.disabled = true;
         submitBtn.textContent = 'Submitting…';
 
+        var ratings = readRatings();
+        if (ratings.rated < ratingNames.length || ratings.total < WARN_MIN) {
+          msg.textContent = 'Memory filter not passed — finish rating or skip this link.';
+          msg.className = 'form-msg error';
+          return;
+        }
+
         var payload = {
           'form-name': 'add-link',
           title: form.title.value.trim(),
@@ -1418,6 +1710,12 @@
           section: form.section.value,
           author: form.author.value.trim(),
           submitter: form.submitter.value.trim(),
+          reproducibility: String(ratings.values.reproducibility),
+          nontriviality: String(ratings.values.nontriviality),
+          provability: String(ratings.values.provability),
+          relevance: String(ratings.values.relevance),
+          longevity: String(ratings.values.longevity),
+          memory_score: String(ratings.total),
           'bot-field': ''
         };
 
@@ -1431,6 +1729,7 @@
             msg.textContent = 'Thanks — submission received. It will be reviewed and added on next deploy.';
             msg.className = 'form-msg success';
             form.reset();
+            updateVerdict();
             setTimeout(close, 2200);
           })
           .catch(function () {
